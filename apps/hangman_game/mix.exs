@@ -1,8 +1,8 @@
-defmodule SlackBot.Mixfile do
+defmodule HangmanGame.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :slack_bot,
+    [app: :hangman_game,
      version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
@@ -20,7 +20,7 @@ defmodule SlackBot.Mixfile do
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
     [extra_applications: [:logger],
-     mod: {SlackBot.Application, []}]
+     mod: {HangmanGame.Application, []}]
   end
 
   # Dependencies can be Hex packages:
@@ -37,7 +37,6 @@ defmodule SlackBot.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    # {:slack, "~> 0.9.2"}
-    [{:slack, github: "BlakeWilliams/Elixir-Slack"}]
+    []
   end
 end

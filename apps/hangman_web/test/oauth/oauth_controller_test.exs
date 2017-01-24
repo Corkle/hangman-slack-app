@@ -18,7 +18,10 @@ defmodule HangmanWeb.OauthControllerTest do
       assert res.resp_body == "Slack did not recognize the access code generated from your authorization approval. Please use the Add to Slack button to grant authorization again."
     end
 
-    test "url params include a valid slack access code, should save token and send success response" do
+    @tag :todo
+    test "url params include a valid slack access code, should save returned access data to db."
+
+    test "url params include a valid slack access code, send success response" do
       params = %{"code" => "VALID_CODE", "state" => ""}
       res = get_endpoint(params)
       assert res.status == 200

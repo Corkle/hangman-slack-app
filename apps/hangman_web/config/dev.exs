@@ -13,6 +13,8 @@ config :hangman_web, HangmanWeb.Endpoint,
   check_origin: false,
   watchers: []
 
+config :hangman_web,
+  hostname: "slashbot.corkbits.com"
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
@@ -21,7 +23,7 @@ config :logger, :console, format: "[$level] $message\n"
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
-config :hangman_web, :slack_oauth_api, HangmanWeb.Oauth.Slack.DevMock
+config :hangman_web, :slack_oauth_api, HangmanWeb.Oauth.Slack.HTTPoison
 
 config :hangman_web, :slack_app_secret, System.get_env("SLACK_APP_SECRET")
 

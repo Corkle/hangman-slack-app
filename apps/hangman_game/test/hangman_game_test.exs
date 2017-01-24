@@ -1,6 +1,6 @@
-defmodule SlackBotTest do
+defmodule HangmanGameTest do
   use ExUnit.Case
-  doctest SlackBot
+  doctest HangmanGame
 
   test "the truth" do
     assert 1 + 1 == 2

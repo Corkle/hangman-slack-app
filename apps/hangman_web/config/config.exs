@@ -19,7 +19,7 @@ config :logger, :console,
   metadata: [:request_id]
 
 # Public Slack App Id
-config :hangman_web, :slack_app_client_id, 19427839078.126988800178
+config :hangman_web, :slack_app_client_id, "19427839078.126988800178"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

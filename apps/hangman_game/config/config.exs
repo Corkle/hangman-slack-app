@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :slack_bot, key: :value
+#     config :hangman_game, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:slack_bot, :key)
+#     Application.get_env(:hangman_game, :key)
 #
 # Or configure a 3rd-party app:
 #
@@ -28,7 +28,3 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
-
-config :slack_bot, SlackBot.Slack,
-  token: System.get_env("SLACK_TOKEN")
-

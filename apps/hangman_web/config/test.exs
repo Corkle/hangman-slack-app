@@ -6,6 +6,9 @@ config :hangman_web, HangmanWeb.Endpoint,
   http: [port: 4001],
   server: false
 
+config :hangman_web,
+  hostname: "localhost"
+
 # Print only warnings and errors during test
 config :logger, level: :warn
 

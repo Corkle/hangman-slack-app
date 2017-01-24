@@ -8,5 +8,10 @@ defmodule HangmanWeb.Router do
     get "/authorized", OauthController, :authorized? 
   end
 
+  scope "/hangman", HangmanWeb do
+    post "/play", ActionsController, :start
+    post "/message_actions", ActionsController, :dispatch
+  end
+
   #  get "/*path", nil, nil
 end

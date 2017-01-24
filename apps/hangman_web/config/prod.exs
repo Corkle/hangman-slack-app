@@ -1,5 +1,7 @@
 use Mix.Config
 
+@hostname "slashbot.corkbits.com"
+
 # For production, we configure the host to read the PORT
 # from the system environment. Therefore, you will need
 # to set PORT=80 before running your server.
@@ -13,8 +15,11 @@ use Mix.Config
 # which you typically run after static files are built.
 config :hangman_web, HangmanWeb.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
+  url: [host: @hostname, port: 80],
   cache_static_manifest: "priv/static/manifest.json"
+
+config :hangman_web,
+  hostname: @hostname
 
 # Do not print debug messages in production
 config :logger, level: :info

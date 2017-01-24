@@ -1,6 +1,6 @@
-defmodule SlackBot do
+defmodule HangmanGame do
   @moduledoc """
-  Documentation for SlackBot.
+  Documentation for HangmanGame.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule SlackBot do
 
   ## Examples
 
-      iex> SlackBot.hello
+      iex> HangmanGame.hello
       :world
 
   """
