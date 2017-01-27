@@ -18,7 +18,7 @@ defmodule HangmanWeb.OauthController do
     |> text("bad request")
   end
 
-  defp valid_token?({:error, error}, conn) do 
+  defp valid_token?({:error, _error}, conn) do 
     conn
     |> put_status(400)
     |> text("Slack did not recognize the access code generated from your authorization approval. Please use the Add to Slack button to grant authorization again.")

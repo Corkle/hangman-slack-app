@@ -1,54 +1,28 @@
 defmodule HangmanWeb.ActionsController do
   use HangmanWeb.Web, :controller
+  alias HangmanWeb.ActionWorker
+  import HangmanWeb.Actions.ButtonAssets,
+    only: [welcome_msg: 0]
 
-  def start(conn, params) do
+  def start(conn, _) do
+    conn
+    |> put_status(200)
+    |> json(welcome_msg())
+  end
+
+  def guess(conn, params) do
     IO.inspect(params)
-    send_response(conn, start_msg())
+    |> put_status(200)
+    |> json(welcome_msg()) 
   end
 
-  def dispatch(conn, %{"payload" => json_msg}) do
-    payload =
-      with {:ok, msg} <- Poison.decode(json_msg) do
-          msg["actions"]      
-      else
-        _ -> %{error: "ERROR"}
-      end
-
-    send_response(conn, payload)
+  def dispatch(conn, action, params) do
+    IO.inspect(params)
+    send_response(conn, {:ok, action["name"]})
   end
 
-  defp send_response(conn, payload \\ %{}),
+  defp send_response(conn, {:error, error}),
+    do: conn |> put_status(500) |> json(error)
+  defp send_response(conn, {:ok, payload}),
     do: conn |> put_status(200) |> json(payload)
-
-  defp start_msg do
-    %{
-      text: "Hey pal, you looking to kill some time with a game?",
-      attachments: [%{
-        text: "What would you like to do?",
-        callback_id: "play_123", 
-        color: "#3AA344",
-        actions: [
-          %{name: "play_game",
-            text: "Play",
-            type: "button",
-            style: "primary",
-            value: "play_game"},
-          %{name: "help",
-            text: "Help",
-            type: "button",
-            value: "help"},
-          %{name: "cancel",
-            text: "End Current Game",
-            style: "danger",
-            type: "button",
-            value: "cancel",
-            confirm: %{
-              title: "Are you sure?",
-              text: "This will delete your current progress?",
-              ok_text: "Yes",
-              dismiss_text: "No"}}
-        ]}
-      ]}
-  end
-
 end

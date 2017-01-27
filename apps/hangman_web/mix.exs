@@ -36,6 +36,7 @@ defmodule HangmanWeb.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:httpoison, "~> 0.9.0"}]
+     {:httpoison, "~> 0.9.0"},
+     {:hangman_game, in_umbrella: true}]
   end
 end
