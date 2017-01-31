@@ -1,4 +1,4 @@
-defmodule HangmanWeb.Actions.ButtonAssets do
+defmodule HangmanWeb.Slack.ActionButtons do
   def button(text, id),
     do: button(text, id, id, "default")
   def button(text, id, style),

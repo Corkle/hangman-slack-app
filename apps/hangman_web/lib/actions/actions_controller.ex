@@ -1,7 +1,7 @@
 defmodule HangmanWeb.ActionsController do
   use HangmanWeb.Web, :controller
   alias HangmanWeb.ActionWorker
-  import HangmanWeb.Actions.ButtonAssets,
+  import HangmanWeb.Slack.ActionButtons,
     only: [welcome_msg: 0]
 
   def start(conn, _) do
@@ -16,9 +16,9 @@ defmodule HangmanWeb.ActionsController do
     |> json(welcome_msg()) 
   end
 
-  def dispatch(conn, action, params) do
-    IO.inspect(params)
-    send_response(conn, {:ok, action["name"]})
+  def dispatch(conn, action, slack) do
+    IO.inspect({action, slack})
+    send_response(conn, {:ok, action})
   end
 
   defp send_response(conn, {:error, error}),

@@ -97,10 +97,11 @@ defmodule HangmanWeb.SlackPlugsTest do
 
   describe "verify_slack_token/2" do
     test "when no Slack token is provided as second argument,
-      should return 400 response and halt pipeline" do
-      conn = build_conn() |> verify_slack_token(nil)
-      assert conn.status == 400
-      assert conn.halted == true
+      should raise error" do
+      conn = build_conn()
+      assert_raise ArgumentError, fn -> 
+        verify_slack_token(conn, nil)
+      end
     end
 
     test "when assigns.slack_token does not match the provided token argument,

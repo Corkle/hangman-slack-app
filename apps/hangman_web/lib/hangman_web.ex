@@ -11,7 +11,7 @@ defmodule HangmanWeb do
       # Start the endpoint when the application starts
       supervisor(HangmanWeb.Endpoint, []),
       # Start your own worker by calling: HangmanWeb.Worker.start_link(arg1, arg2, arg3)
-      worker(HangmanWeb.ActionWorker, [HangmanWeb.ActionWorker])
+      worker(HangmanWeb.ActionsWorker, [HangmanWeb.ActionsWorker])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

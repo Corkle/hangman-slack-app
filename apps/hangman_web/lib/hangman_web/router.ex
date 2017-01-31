@@ -4,6 +4,7 @@ defmodule HangmanWeb.Router do
 
   @slack_message_token Application.get_env(:hangman_web, :slack_message_token)
 
+  IO.inspect(@slack_message_token)
 
   pipeline :api,
     do: plug :accepts, ["json"]
@@ -25,7 +26,7 @@ defmodule HangmanWeb.Router do
   scope "/hangman/message_actions", HangmanWeb do
     pipe_through :slack_action
 
-    forward "/", Plugs.ActionRouter
+    forward "/", ActionsRouter, dispatcher: HangmanWeb.ActionsController 
   end
 
   scope "/hangman", HangmanWeb do
@@ -33,7 +34,6 @@ defmodule HangmanWeb.Router do
 
     post "/play", ActionsController, :start
     post "/guess", ActionsController, :guess
-   
   end
 
   #  get "/*path", nil, nil

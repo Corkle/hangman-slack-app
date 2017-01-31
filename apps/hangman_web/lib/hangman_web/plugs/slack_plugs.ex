@@ -57,12 +57,12 @@ defmodule HangmanWeb.SlackPlugs do
   Checks `conn.assigns.slack_token` and compares it to the
   token passed as the second function argument. `conn` is
   returned, unchanged, if the tokens are a match.
-  If the tokens do not match or if `nil` is passes for the
-  argument token, the Plug pipeline is halted and the
-  request is sent a 400 status response.
+  If the token does not match the argument token, the Plug
+  pipeline is halted and the request is sent a 400 status response.
+  An error is raised if token argument is `nil`.
   """
   def verify_slack_token(conn, nil),
-    do: bad_request(conn)
+    do: raise(ArgumentError, message: "Slack validation token cannot be nil") 
   def verify_slack_token(%{assigns: %{slack_token: from_token}} = conn, token)
     when from_token == token,
     do: conn

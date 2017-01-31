@@ -1,4 +1,4 @@
-defmodule HangmanWeb.ActionWorker do
+defmodule HangmanWeb.ActionsWorker do
   use GenServer
   alias HangmanGame.GameSession
 
