@@ -15,3 +15,5 @@ config :logger, level: :warn
 config :hangman_web, :slack_oauth_api, HangmanWeb.Oauth.Slack.TestMock
 
 config :hangman_web, :slack_app_secret, "SLACK_APP_SECRET"
+
+config :hangman_web, :slack_message_token, "SLACK_MSG_TOKEN"

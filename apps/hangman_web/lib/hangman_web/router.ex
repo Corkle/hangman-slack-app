@@ -1,10 +1,8 @@
 defmodule HangmanWeb.Router do
   use HangmanWeb.Web, :router
-  import HangmanWeb.SlackPlugs
+  import HangmanWeb.Slack.RequestPlugs
 
   @slack_message_token Application.get_env(:hangman_web, :slack_message_token)
-
-  IO.inspect(@slack_message_token)
 
   pipeline :api,
     do: plug :accepts, ["json"]
@@ -23,17 +21,17 @@ defmodule HangmanWeb.Router do
     get "/authorized", OauthController, :authorized? 
   end
 
-  scope "/hangman/message_actions", HangmanWeb do
+  scope "/hangman/message_actions" do
     pipe_through :slack_action
-
-    forward "/", ActionsRouter, dispatcher: HangmanWeb.ActionsController 
+  
+    post "/", HangmanWeb.Slack.ActionsController, :dispatch
   end
 
-  scope "/hangman", HangmanWeb do
+  scope "/hangman", HangmanWeb.Slack do
     pipe_through :slack_command
 
-    post "/play", ActionsController, :start
-    post "/guess", ActionsController, :guess
+    post "/play", CommandsController, :start
+    post "/guess", CommandsController, :guess
   end
 
   #  get "/*path", nil, nil

@@ -34,6 +34,6 @@ defmodule HangmanWeb.Oauth.Slack.HTTPoison do
     do: {:error, error}
   defp handle_response(%{"ok" => true} = data),
     do: {:ok, Map.delete(data, "ok")}
-  defp handle_response(res),
+  defp handle_response(_),
     do: {:error, "Unexpected Response"}
 end

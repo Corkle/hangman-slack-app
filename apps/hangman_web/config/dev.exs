@@ -28,3 +28,4 @@ config :hangman_web, :slack_oauth_api, HangmanWeb.Oauth.Slack.HTTPoison
 config :hangman_web, :slack_app_secret, System.get_env("SLACK_APP_SECRET")
 
 config :hangman_web, :slack_message_token, System.get_env("SLACK_MSG_TOKEN")
+
