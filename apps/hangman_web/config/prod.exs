@@ -65,6 +65,8 @@ config :logger, level: :info
 # which should be versioned separately.
 import_config "prod.secret.exs"
 
+config :hangman_web, :slack_http, HangmanWeb.Slack.HTTP
+
 config :hangman_web, :slack_oauth_api, HangmanWeb.Oauth.Slack.HTTPoison
 
 config :hangman_web, :slack_app_secret, System.get_env("SLACK_APP_SECRET")

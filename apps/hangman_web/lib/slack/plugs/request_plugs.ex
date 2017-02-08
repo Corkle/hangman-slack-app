@@ -90,6 +90,8 @@ defmodule HangmanWeb.Slack.RequestPlugs do
   defp get_action([]), do: nil
   defp get_action(nil), do: nil
 
+  defp pluck_action(%{"name" => name, "value" => ""}),
+    do: name
   defp pluck_action(%{"name" => name, "value" => val}),
     do: {name, val}
   defp pluck_action(%{"name" => name}),

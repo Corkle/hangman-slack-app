@@ -1,13 +1,17 @@
 defmodule HangmanWeb.Slack.ActionButtons do
-  def button(text, id),
-    do: button(text, id, id, "default")
-  def button(text, id, style),
-    do: button(text, id, id, style)
-  def button(text, id, val, style),
-    do: %{text: text, name: id, value: val, style: style, type: "button"} 
+  def button(text, name, opts \\ []) do
+    style = Keyword.get(opts, :style, "default")
+    %{text: text, name: name, style: style, type: "button"} 
+    |> add_opt(opts, :value)
+    |> add_opt(opts, :confirm)
+  end
 
-  def conf_button(text, id, val, style, conf),
-    do: %{text: text, name: id, value: val, style: style, conf: conf, type: "button"}
+  defp add_opt(map, opts, key) do
+    case Keyword.get(opts, key) do
+      nil -> map
+      val -> Map.put(map, key, val)
+    end
+  end
 
   def welcome_msg do
     %{text: "Hey pal, you looking to kill some time with a game?",
@@ -16,7 +20,7 @@ defmodule HangmanWeb.Slack.ActionButtons do
         callback_id: "play_123", 
         color: "#3AA344",
         actions: [
-          button("Play", "play_game", "primary"),
+          button("Play", "play_game", [style: "primary"])
         ]}
       ]}
   end

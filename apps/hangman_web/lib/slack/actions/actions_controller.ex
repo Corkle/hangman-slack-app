@@ -5,6 +5,7 @@ defmodule HangmanWeb.Slack.ActionsController do
     do: apply(__MODULE__, action_name(conn), [conn, action, slack])
 
   def dispatch(conn, "play_game", slack) do
+    IO.inspect conn
     slack_worker(conn).dispatch(:play, slack)
     msg = %{text: "Please wait..."}
     send_response(conn, {:ok, msg})

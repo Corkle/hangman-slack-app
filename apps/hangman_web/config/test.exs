@@ -12,6 +12,8 @@ config :hangman_web,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+config :hangman_web, :slack_http, HangmanWeb.Slack.HTTPMock
+
 config :hangman_web, :slack_oauth_api, HangmanWeb.Oauth.Slack.TestMock
 
 config :hangman_web, :slack_app_secret, "SLACK_APP_SECRET"
