@@ -4,10 +4,10 @@ defmodule HangmanWeb.Slack.RequestPlugsTest do
 
   describe "parse_command_data/2" do
     test "when conn has empty params,
-      should return conn with assigns.command with nil for all expected Slack fields" do
+      should return conn with assigns.slack with nil for all expected Slack fields" do
       conn = build_conn() |> parse_command_data(nil) 
       expected =
-        %{command:
+        %{slack:
           %{channel_id: nil, channel_name: nil,
             command: nil, response_url: nil,
             team_domain: nil, team_id: nil,
@@ -18,7 +18,7 @@ defmodule HangmanWeb.Slack.RequestPlugsTest do
     end
 
     test "when conn has expected slack data,
-      should assign :token value and :command as an atom-keyed map for slack data." do
+      should assign :slack_token value and :slack as an atom-keyed map for slack data." do
       params =
         %{"channel_id" => "CHANNEL_ID", "channel_name" => "CHANNEL_NAME",
           "command" => "SLACK_COMMAND", "response_url" => "RESPONSE_URL",
@@ -26,7 +26,7 @@ defmodule HangmanWeb.Slack.RequestPlugsTest do
           "text" => "SLACK_TEXT", "token" => "SLACK_TOKEN",
           "user_id" => "USER_ID", "user_name" => "USER_NAME"}
       expected =
-        %{command:
+        %{slack:
           %{channel_id: "CHANNEL_ID", channel_name: "CHANNEL_NAME",
             command: "SLACK_COMMAND", response_url: "RESPONSE_URL",
             team_domain: "TEAM_DOMAIN", team_id: "TEAM_ID",

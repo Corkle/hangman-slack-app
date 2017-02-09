@@ -16,7 +16,7 @@ defmodule HangmanWeb.Slack.RequestPlugs do
             :text, :token, :user_id, :user_name]
     {:ok, data} = convert_to_atom_keys(conn.params, keys)
     conn
-    |> assign(:command, data)
+    |> assign(:slack, data)
     |> assign(:slack_token, data.token)
   end
 
