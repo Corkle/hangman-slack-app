@@ -1,5 +1,6 @@
 defmodule HangmanWeb.Slack.ActionsController do
-  use HangmanWeb.Web, :controller
+  #use HangmanWeb.Web, :controller
+   use Phoenix.Controller 
 
   def action(%{assigns: %{slack: slack, current_action: action}} = conn, _),
     do: apply(__MODULE__, action_name(conn), [conn, action, slack])
