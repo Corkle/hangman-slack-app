@@ -1,8 +1,7 @@
 defmodule HangmanWeb.SlackWorker do
   @moduledoc """
-  Handles dispatching game actions and responding
-  to the message after the initial response has
-  already been sent.
+  Handles game actions from Slack requests and responds to the
+  message after the initial HTTP response has already been sent.
   """
   use GenServer
 
@@ -15,12 +14,8 @@ defmodule HangmanWeb.SlackWorker do
   def start_link(name),
     do: GenServer.start_link(__MODULE__, nil, [name: name])
 
-  def dispatch(:play, slack),
-    do: try_cast(:play, is_slack(slack)) 
-
-  def dispatch(action, slack) do
-    IO.puts("WORKER.DISPATCH")
-  end
+  def play(slack),
+    do: try_cast(:play, slack) 
 
   def init(_),
     do: {:ok, %{http: @http}}
@@ -28,7 +23,7 @@ defmodule HangmanWeb.SlackWorker do
   def handle_cast({:play, slack}, state) do
     with {:ok, id} <- get_id(slack),
          {:ok, game} <- GameSession.connect(id) do
-           state.http.post_json(slack.response_url, game_message(:play, game))
+           send_json(state, slack.response_url, game_message(:play, game))
     else
       _ -> Logger.error("bad cast", [slack: slack]) 
     end
@@ -60,19 +55,16 @@ defmodule HangmanWeb.SlackWorker do
     |> Enum.join
   end
 
-  def get_id(%{user: %{"id" => uid}, team: %{"id" => team}}),
+  defp send_json(%{http: http}, url, body),
+    do: http.post_json(url, body)
+
+  defp get_id(%{user: %{id: uid}, team: %{id: team}}),
     do: {:ok, team <> ":" <>  uid}
-  def get_id(_),
+  defp get_id(_),
     do: {:error, "invalid slack data"}
 
-  defp is_slack(%{user: _, team: _, response_url: _} = slack),
-    do: {:ok, slack} 
-  defp is_slack(_),
-    do: {:error, "invalid slack data"}
-
-  defp try_cast(action, {:ok, slack}),
+  defp try_cast(action, %Slack{} = slack),
     do: GenServer.cast(__MODULE__, {action, slack}) 
   defp try_cast(_, _),
     do: {:error, "invalid slack data"}
 end
-

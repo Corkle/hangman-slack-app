@@ -115,3 +115,4 @@ defmodule SlackTest do
     assert Slack.create(payload) == expected
   end
 end
+

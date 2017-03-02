@@ -22,7 +22,6 @@ defmodule HangmanWeb do
     children = [
       # Start the endpoint when the application starts
       supervisor(HangmanWeb.Endpoint, []),
-      # Start your own worker by calling: HangmanWeb.Worker.start_link(arg1, arg2, arg3)
       worker(HangmanWeb.SlackWorker, [HangmanWeb.SlackWorker])
     ]
 

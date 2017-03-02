@@ -41,6 +41,7 @@ defmodule Slack.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:phoenix, "~> 1.2.1"}]
+    [{:phoenix, "~> 1.2.1"},
+     {:credo, "~> 0.5", only: [:dev, :test]}]
   end
 end

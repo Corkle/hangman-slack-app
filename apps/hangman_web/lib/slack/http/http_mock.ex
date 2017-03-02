@@ -6,7 +6,7 @@ defmodule HangmanWeb.Slack.HTTPMock do
 
   defp handle_result(url, {:ok, json}),
     do: {:ok, {url, Poison.decode!(json)}}
-  defp handle_result(url, _),
+  defp handle_result(_url, _),
     do: {:error, "invalid json"}
 end
 

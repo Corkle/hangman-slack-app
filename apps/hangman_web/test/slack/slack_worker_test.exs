@@ -4,15 +4,15 @@ defmodule HangmanWeb.SlackWorkerTest do
 
   defp slack_data _ do
     slack =
-      %{user: %{"id" => "USERID", "name" => "user"},
-        channel: %{"id" => "CHANNELID", "name" => "channel_name"},
-        team: %{"domain" => "slackteam", "id" => "TEAMID"},
+      %Slack{user: %{id: "USERID", name: "user"},
+        channel: %{id: "CHANNELID", name: "channel_name"},
+        team: %{domain: "slackteam", id: "TEAMID"},
         response_url: "response_url"}
     {:ok, slack: slack}
   end
   
   defp fresh_game_session %{slack: slack} do
-    id = slack.team["id"] <> slack.user["id"] 
+    id = slack.team.id <> slack.user.id 
     on_exit fn ->
       kill_proc(GenServer.whereis({:global, {:session, id}}))
     end
@@ -29,18 +29,18 @@ defmodule HangmanWeb.SlackWorkerTest do
     end
   end
 
-  describe "dispatch(:play, slack)" do
+  describe "play/1" do
     setup [:slack_data, :fresh_game_session]
 
     test "with invalid slack data, should return error" do
       slack = 
         %{user: %{"id" => "USERID", "name" => "user"},
           response_url: "response_url"}
-      assert {:error, "invalid slack data"} = SlackWorker.dispatch(:play, slack)
+      assert {:error, "invalid slack data"} = SlackWorker.play(slack)
     end
 
     test "with valid slack data, should dispatch to Genserver cast", context do
-      assert :ok = SlackWorker.dispatch(:play, context.slack)
+      assert :ok = SlackWorker.play(context.slack)
     end
 
     test "when a user has not started a game,
@@ -50,6 +50,5 @@ defmodule HangmanWeb.SlackWorkerTest do
       assert url == slack.response_url
       assert %{attachments: _} = message 
     end
-
   end
 end
