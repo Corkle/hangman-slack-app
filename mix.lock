@@ -17,6 +17,7 @@
   "plug": {:hex, :plug, "1.3.0", "6e2b01afc5db3fd011ca4a16efd9cb424528c157c30a44a0186bcc92c7b2e8f3", [:mix], [{:cowboy, "~> 1.0.1 or ~> 1.1", [hex: :cowboy, optional: true]}, {:mime, "~> 1.0", [hex: :mime, optional: false]}]},
   "poison": {:hex, :poison, "2.2.0", "4763b69a8a77bd77d26f477d196428b741261a761257ff1cf92753a0d4d24a63", [:mix], []},
   "ranch": {:hex, :ranch, "1.2.1", "a6fb992c10f2187b46ffd17ce398ddf8a54f691b81768f9ef5f461ea7e28c762", [:make], []},
-  "slack": {:git, "https://github.com/BlakeWilliams/Elixir-Slack.git", "571fc835a888c2890614a72dc5df5547da085ce9", []},
+  "slack": {:hex, :slack_interactive, "0.1.0", "77908a7aa350c4db6cb498d32e53a10fa8a598a0bec397e2757958253f58a690", [:mix], [{:phoenix, "~> 1.2.1", [hex: :phoenix, optional: false]}]},
+  "slack_interactive": {:hex, :slack_interactive, "0.1.0", "77908a7aa350c4db6cb498d32e53a10fa8a598a0bec397e2757958253f58a690", [:mix], [{:phoenix, "~> 1.2.1", [hex: :phoenix, optional: false]}]},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.1", "28a4d65b7f59893bc2c7de786dec1e1555bd742d336043fe644ae956c3497fbe", [:make, :rebar], []},
   "websocket_client": {:hex, :websocket_client, "1.1.0", "c1ac9162a2286d3ca747417b1717090e762becba1f9f0bde359cb0318b066636", [:rebar3], []}}

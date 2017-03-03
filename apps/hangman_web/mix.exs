@@ -38,6 +38,7 @@ defmodule HangmanWeb.Mixfile do
      {:cowboy, "~> 1.0"},
      {:httpoison, "~> 0.9.0"},
      {:hangman_game, in_umbrella: true},
-     {:slack, in_umbrella: true}]
+     {:slack, "~> 0.1.0", hex: :slack_interactive},
+     {:credo, "~> 0.5", only: [:dev, :test]}]
   end
 end

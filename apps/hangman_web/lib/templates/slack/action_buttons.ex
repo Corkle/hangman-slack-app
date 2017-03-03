@@ -1,7 +1,11 @@
 defmodule HangmanWeb.Slack.ActionButtons do
+  @moduledoc """
+  Templates for commonly used Slack interactive buttons.
+  """
+
   def button(text, name, opts \\ []) do
     style = Keyword.get(opts, :style, "default")
-    %{text: text, name: name, style: style, type: "button"} 
+    %{text: text, name: name, style: style, type: "button"}
     |> add_opt(opts, :value)
     |> add_opt(opts, :confirm)
   end
@@ -17,7 +21,7 @@ defmodule HangmanWeb.Slack.ActionButtons do
     %{text: "Hey pal, you looking to kill some time with a game?",
       attachments: [%{
         text: "What would you like to do?",
-        callback_id: "play_123", 
+        callback_id: "play",
         color: "#3AA344",
         actions: [
           button("Play", "play_game", [style: "primary"])
@@ -25,4 +29,3 @@ defmodule HangmanWeb.Slack.ActionButtons do
       ]}
   end
 end
-

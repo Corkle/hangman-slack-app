@@ -5,7 +5,7 @@ defmodule HangmanWeb.Router do
     do: plug :accepts, ["json"]
 
   scope "/oauth", HangmanWeb do
-    get "/authorized", OauthController, :authorized? 
+    get "/authorized", OauthController, :authorized?
   end
 
   scope "/hangman", HangmanWeb.Slack do

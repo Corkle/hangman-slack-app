@@ -1,6 +1,11 @@
 defmodule HangmanWeb do
+  @moduledoc false
+
   use Application
+
   require Logger
+
+  alias HangmanWeb.Endpoint
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
@@ -38,7 +43,7 @@ defmodule HangmanWeb do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    HangmanWeb.Endpoint.config_change(changed, removed)
+    Endpoint.config_change(changed, removed)
     :ok
   end
 end

@@ -1,4 +1,6 @@
 defmodule HangmanWeb.Slack.HTTPMock do
+  @moduledoc false
+
   @behaviour HangmanWeb.Slack.HTTP
 
   def post_json(url, body),
@@ -9,4 +11,3 @@ defmodule HangmanWeb.Slack.HTTPMock do
   defp handle_result(_url, _),
     do: {:error, "invalid json"}
 end
-

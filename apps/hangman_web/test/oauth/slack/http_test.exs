@@ -1,6 +1,6 @@
-defmodule HangmanWeb.Oauth.Slack.HTTPoisonTest do
+defmodule HangmanWeb.Oauth.Slack.HTTPTest do
   use HangmanWeb.ConnCase 
-  alias HangmanWeb.Oauth.Slack.HTTPoison, as: SlackHTTP
+  alias HangmanWeb.Oauth.Slack.HTTP, as: SlackHTTP
 
   @moduletag :slack_api
   # slack_api tagged tests are excluded by default

@@ -15,7 +15,7 @@ defmodule HangmanWeb.SlackWorker do
     do: GenServer.start_link(__MODULE__, nil, [name: name])
 
   def play(slack),
-    do: try_cast(:play, slack) 
+    do: try_cast(:play, slack)
 
   def init(_),
     do: {:ok, %{http: @http}}
@@ -25,7 +25,7 @@ defmodule HangmanWeb.SlackWorker do
          {:ok, game} <- GameSession.connect(id) do
            send_json(state, slack.response_url, game_message(:play, game))
     else
-      _ -> Logger.error("bad cast", [slack: slack]) 
+      _ -> Logger.error("bad cast", [slack: slack])
     end
     {:noreply, state}
   end
@@ -45,15 +45,14 @@ defmodule HangmanWeb.SlackWorker do
   end
 
   defp format_puzzle(puzzle) do
-    Enum.map(puzzle, fn x ->
-      case x do
-        " " -> "\t"
-        "_" -> ":white_medium_small_square:"
-        val -> val
-      end
-    end)
+    puzzle
+    |> Enum.map(&format_puzzle_char/1)
     |> Enum.join
   end
+
+  defp format_puzzle_char(" "), do: "\t"
+  defp format_puzzle_char("_"), do: ":white_medium_small_square:"
+  defp format_puzzle_char(val), do: val
 
   defp send_json(%{http: http}, url, body),
     do: http.post_json(url, body)
@@ -64,7 +63,7 @@ defmodule HangmanWeb.SlackWorker do
     do: {:error, "invalid slack data"}
 
   defp try_cast(action, %Slack{} = slack),
-    do: GenServer.cast(__MODULE__, {action, slack}) 
+    do: GenServer.cast(__MODULE__, {action, slack})
   defp try_cast(_, _),
     do: {:error, "invalid slack data"}
 end

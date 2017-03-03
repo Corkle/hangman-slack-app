@@ -8,8 +8,8 @@ defmodule HangmanWeb.Slack.CommandController do
   def handle_command("/playhangman", conn, _slack),
     do: send_response(conn, welcome_msg())
 
-  def handle_command("/guess", _conn, _slack),
-    do: :todo 
+  def handle_command("/guess", conn, _slack),
+    do: :todo
 
   defp send_response(conn, {:error, error}) do
     conn

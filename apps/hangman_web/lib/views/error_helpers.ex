@@ -27,4 +27,3 @@ defmodule HangmanWeb.ErrorHelpers do
     end
   end
 end
-

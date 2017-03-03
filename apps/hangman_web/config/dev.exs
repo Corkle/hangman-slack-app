@@ -25,7 +25,7 @@ config :phoenix, :stacktrace_depth, 20
 
 config :hangman_web, :slack_http, HangmanWeb.Slack.HTTP
 
-config :hangman_web, :slack_oauth_api, HangmanWeb.Oauth.Slack.HTTPoison
+config :hangman_web, :slack_oauth_api, HangmanWeb.Oauth.Slack.HTTP
 
 config :hangman_web, :slack_app_secret, System.get_env("SLACK_APP_SECRET")
 
