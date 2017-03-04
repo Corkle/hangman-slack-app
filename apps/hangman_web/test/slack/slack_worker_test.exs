@@ -51,4 +51,19 @@ defmodule HangmanWeb.SlackWorkerTest do
       assert %{attachments: _} = message 
     end
   end
+
+  describe "guess/2" do
+    setup [:slack_data, :fresh_game_session]
+
+    test "with invalid slack data, should return error" do
+      slack = 
+        %{user: %{"id" => "USERID", "name" => "user"},
+          response_url: "response_url"}
+      assert {:error, "invalid slack data"} = SlackWorker.guess("a", slack)
+    end
+
+    test "with valid slack data, should dispatch to Genserver cast", context do
+      assert :ok = SlackWorker.guess("a", context.slack)
+    end
+  end
 end

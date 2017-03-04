@@ -36,7 +36,7 @@ defmodule HangmanWeb.Oauth.Slack.HTTP do
   defp get_response(url),
     do: get_body(HTTPoison.get(url, [], []))
 
-  defp get_body(%HTTPoison.Response{body: body}),
+  defp get_body({:ok, %HTTPoison.Response{body: body}}),
     do: {:ok, body}
   defp get_body(_),
     do: {:error, :bad_request}

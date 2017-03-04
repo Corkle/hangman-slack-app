@@ -1,6 +1,6 @@
-defmodule HangmanWeb.Slack.ActionButtons do
+defmodule HangmanWeb.Slack.Messages do
   @moduledoc """
-  Templates for commonly used Slack interactive buttons.
+  Templates for commonly used Slack message responses.
   """
 
   def button(text, name, opts \\ []) do
@@ -27,5 +27,11 @@ defmodule HangmanWeb.Slack.ActionButtons do
           button("Play", "play_game", [style: "primary"])
         ]}
       ]}
+  end
+
+  def guess_param_error do
+    %{attachments: [
+      %{color: "danger",
+        text: "Oops! You must make a guess with a single letter (e.g. \"/guess b\")"}]}
   end
 end

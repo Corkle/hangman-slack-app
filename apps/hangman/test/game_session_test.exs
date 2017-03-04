@@ -1,6 +1,6 @@
-defmodule HangmanGame.GameSessionTest do
+defmodule Hangman.GameSessionTest do
   use ExUnit.Case
-  alias HangmanGame.GameSession
+  alias Hangman.GameSession
 
   defp convert_letter(char),
     do: if char =~ ~r/[a-z]/, do: "_", else: char
@@ -10,112 +10,6 @@ defmodule HangmanGame.GameSessionTest do
     |> String.downcase
     |> String.codepoints
     |> Enum.map(fn x -> convert_letter(x) end) 
-  end
-
-  describe "connect/1" do
-    test "with a new session id, should return new session with intial state" do
-      assert {:ok, state} = GameSession.connect("NEW_ID")
-      assert state.id == "NEW_ID"
-      assert state.status == :new_game
-      assert state.guessed == []
-      assert state.puzzle != nil 
-      assert state.failures_remaining == 10
-      assert !Map.has_key?(state, :secret) 
-    end
-
-    test "with a session id with already spawned server, should return current state of that server" do
-      {:ok, _pid} = GameSession.start_link("SESSION_ID")
-      GameSession.guess("SESSION_ID", "p")
-      {:ok, {_, state}} = GameSession.guess("SESSION_ID", "x")
-      assert state.guessed == ["x", "p"]
-      assert state.status == :in_progress
-      assert {:ok, ^state} = GameSession.connect("SESSION_ID")
-    end
-  end
-
-# # # # # # # # # # # # # # # # # # # # # #
-#               CLIENT API
-# ----------------------------------------
-# Client API tests will spin up a process
-# before each test. Only return output is
-# tested here.
-# # # # # # # # # # # # # # # # # # # # # #
-
-  describe "get/1" do
-    test "with an id that does not have a spawned server, should return :not_spanwed error" do
-      assert {:error, :not_spawned} = GameSession.get("NOT_SPAWNED")
-    end
-
-    test "with an id that has a spawned server, should return state without secret" do
-      {:ok, _pid} = GameSession.start_link("SESSION_ID")
-      assert {:ok, state} = GameSession.get("SESSION_ID")
-      assert state.id == "SESSION_ID"
-      assert state.status == :new_game
-      assert state.guessed == []
-      assert state.puzzle != nil 
-      assert state.failures_remaining == 10
-      assert !Map.has_key?(state, :secret) 
-    end
-  end
-
-  describe "guess/2" do
-    test "with a session id that has not been spawned, should return :not_spawned error" do
-      assert {:error, :not_spawned} = GameSession.guess("NOT_SPAWNED", "h")
-    end
-
-    test "with a non-binary value for letter, should raise exception" do
-      assert_raise FunctionClauseError, fn ->
-        GameSession.guess("ID", 4)
-      end
-    end
-
-    test "when letter has a length != 1, should raise exception" do
-      assert_raise FunctionClauseError, fn ->
-        GameSession.guess("ID", "aa")
-      end
-      assert_raise FunctionClauseError, fn ->
-        GameSession.guess("ID", "ABC")
-      end
-      assert_raise FunctionClauseError, fn ->
-        GameSession.guess("ID", "a1")
-      end
-      assert_raise FunctionClauseError, fn ->
-        GameSession.guess("ID", "")
-      end
-    end
-
-    test "with a non-alpha character, should return :invalid_character error" do
-      assert {:error, :invalid_character} == GameSession.guess("ID", "4")
-      assert {:error, :invalid_character} == GameSession.guess("ID", ".")
-      assert {:error, :invalid_character} == GameSession.guess("ID", " ")
-      assert {:error, :invalid_character} == GameSession.guess("ID", "\\")
-      assert {:error, :invalid_character} == GameSession.guess("ID", "<")
-      assert {:error, :invalid_character} == GameSession.guess("ID", "_")
-      assert {:error, :invalid_character} == GameSession.guess("ID", "&")
-    end
-  
-    test "with a valid guess, should return :ok with either :correct or :incorrect with updated state. Status should update to :in_progress" do
-      {:ok, _pid} = GameSession.start_link("SESSION_ID")
-      assert {:ok, %{status: :new_game}} = GameSession.get("SESSION_ID")
-      assert {:ok, {guess_result, state}} = GameSession.guess("SESSION_ID", "e") 
-      assert Enum.member?([:correct, :incorrect], guess_result)
-      assert %{status: :in_progress, puzzle: _, guessed: ["e"], failures_remaining: _, id: "SESSION_ID"} = state
-    end
-
-    test "with a letter that has already been guessed, should return :already_guessed error" do
-      {:ok, _pid} = GameSession.start_link("SESSION_ID")
-      assert {:ok, _} = GameSession.guess("SESSION_ID", "e")
-      assert {:error, {:already_guessed, "e"}} = GameSession.guess("SESSION_ID", "e")
-    end
-
-    test "with an uppercase letter guess, should make guess as lowercase and return status and state" do
-      {:ok, _pid} = GameSession.start_link("SESSION_ID")
-      assert {:ok, {status, state}} = GameSession.guess("SESSION_ID", "A") 
-      assert Enum.member?([:correct, :incorrect], status)
-      assert %{status: status, puzzle: _, guessed: guessed, failures_remaining: _, id: "SESSION_ID"} = state
-      assert guessed == ["a"] 
-      assert status == :in_progress
-    end
   end
   
 # # # # # # # # # # # # # # # # # # # # # #
@@ -245,3 +139,4 @@ defmodule HangmanGame.GameSessionTest do
     end
   end
 end
+

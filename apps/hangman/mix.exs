@@ -1,8 +1,8 @@
-defmodule HangmanGame.Mixfile do
+defmodule Hangman.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :hangman_game,
+    [app: :hangman,
      version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
@@ -20,7 +20,7 @@ defmodule HangmanGame.Mixfile do
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
     [extra_applications: [:logger],
-     mod: {HangmanGame.Application, []}]
+     mod: {Hangman.Application, []}]
   end
 
   # Dependencies can be Hex packages:
@@ -31,12 +31,8 @@ defmodule HangmanGame.Mixfile do
   #
   #   {:my_dep, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
   #
-  # To depend on another app inside the umbrella:
-  #
-  #   {:my_app, in_umbrella: true}
-  #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [{:credo, "~> 0.5", only: [:dev, :test]}]
   end
 end

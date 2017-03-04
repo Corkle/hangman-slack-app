@@ -1,5 +1,9 @@
-defmodule HangmanGame.GameSupervisor do
+defmodule Hangman.GameSupervisor do
+  @moduledoc """
+  Spawns and supervises `Hangman.GameSession` processes.
+  """
   use Supervisor
+
   require Logger
 
   def start_link,
@@ -7,9 +11,9 @@ defmodule HangmanGame.GameSupervisor do
 
   def init(:ok) do
     children = [
-      worker(HangmanGame.GameSession, [], restart: :temporary)
+      worker(Hangman.GameSession, [], restart: :temporary)
     ]
-    Logger.info("GameSupervisor Started")
+    Logger.info("GameSupervisor Started!")
     supervise(children, strategy: :simple_one_for_one)
   end
 
@@ -28,6 +32,5 @@ defmodule HangmanGame.GameSupervisor do
   defp do_spawn_session({:error, {:already_started, pid}}),
     do: {:ok, pid}
   defp do_spawn_session(_),
-    do: {:error, "Unable to start GameSession"}
+    do: {:error, :failed_start}
 end
-

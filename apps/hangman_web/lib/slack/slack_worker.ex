@@ -7,27 +7,32 @@ defmodule HangmanWeb.SlackWorker do
 
   require Logger
 
-  alias HangmanGame.GameSession
-
   @http Application.get_env(:hangman_web, :slack_http)
 
   def start_link(name),
     do: GenServer.start_link(__MODULE__, nil, [name: name])
 
-  def play(slack),
-    do: try_cast(:play, slack)
-
   def init(_),
     do: {:ok, %{http: @http}}
 
+  def play(slack),
+    do: try_cast(:play, slack)
+
+  def guess(char, slack),
+    do: try_cast(:guess, char, slack)
+    
   def handle_cast({:play, slack}, state) do
     with {:ok, id} <- get_id(slack),
-         {:ok, game} <- GameSession.connect(id) do
+         {:ok, game} <- Hangman.connect(id) do
            send_json(state, slack.response_url, game_message(:play, game))
     else
       _ -> Logger.error("bad cast", [slack: slack])
     end
     {:noreply, state}
+  end
+
+  def handle_cast({:guess, char, slack}, state) do
+    :todo
   end
 
   defp game_message(:play, game) do
@@ -65,5 +70,9 @@ defmodule HangmanWeb.SlackWorker do
   defp try_cast(action, %Slack{} = slack),
     do: GenServer.cast(__MODULE__, {action, slack})
   defp try_cast(_, _),
+    do: {:error, "invalid slack data"}
+  defp try_cast(action, arg, %Slack{} = slack),
+    do: GenServer.cast(__MODULE__, {action, arg, slack})
+  defp try_cast(_, _, _),
     do: {:error, "invalid slack data"}
 end

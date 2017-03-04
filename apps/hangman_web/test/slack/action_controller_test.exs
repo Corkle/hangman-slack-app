@@ -39,7 +39,7 @@ defmodule HangmanWeb.Slack.ActionControllerTest do
       assert res.status == 400 
     end
 
-    test "with valid slack token, should send 200 response and dispatch :play action to worker" do
+    test "with valid slack token, should send 200 response and call worker's :play fn" do
       slack = 
         @action_params
         |> Map.put("token", @slack_token)

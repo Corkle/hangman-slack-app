@@ -25,7 +25,7 @@ defmodule HangmanWeb.OauthController do
   end
 
   defp valid_token?({:ok, _token}, conn) do
-    #TODO: Save token
+    # TODO FEATURE: Save authorized tokens to DB for authorization scopes
     conn
     |> put_status(200)
     |> text("Success! Hangman has been added to your Slack team. Try out the /playhangman command from the channels you have authroized. You may now close this page.")

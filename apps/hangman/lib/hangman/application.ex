@@ -1,4 +1,4 @@
-defmodule HangmanGame.Application do
+defmodule Hangman.Application do
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -7,16 +7,16 @@ defmodule HangmanGame.Application do
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
-    IO.puts("HangmanGame Starting")
 
     # Define workers and child supervisors to be supervised
     children = [
-      supervisor(HangmanGame.GameSupervisor, [])  
+      supervisor(Hangman.GameSupervisor, []),
+      worker(Hangman.SecretWords, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: HangmanGame.Supervisor]
+    opts = [strategy: :one_for_one, name: Hangman.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end
