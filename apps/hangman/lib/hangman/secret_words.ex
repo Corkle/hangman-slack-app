@@ -17,6 +17,9 @@ defmodule Hangman.SecretWords do
     |> Enum.to_list
   end
 
-  defp random_word(list),
-    do: Enum.random(list)
+  defp random_word(list) do
+    list
+    |> Enum.random()
+    |> String.downcase
+  end
 end

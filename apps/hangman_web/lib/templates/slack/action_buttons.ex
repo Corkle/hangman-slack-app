@@ -34,4 +34,16 @@ defmodule HangmanWeb.Slack.Messages do
       %{color: "danger",
         text: "Oops! You must make a guess with a single letter (e.g. \"/guess b\")"}]}
   end
+
+  def game_not_started_error do
+    %{attachments: [
+      %{color: "warning",
+        text: "Oops! You aren't playing a game yet. Type \"/playhangman\" to start one!"}]}
+  end
+
+  def already_guessed_error(char) do
+    %{attachments: [
+      %{color: "warning",
+        text: "Oops! You already guessed the letter \"#{char}\""}]}
+  end
 end
